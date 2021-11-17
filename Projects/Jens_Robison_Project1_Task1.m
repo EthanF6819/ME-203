@@ -55,7 +55,7 @@ while win==0 & turns<9
         t(x,y)= 'O' ;
         player=1;
         turns=turns+1;
-        % player 1 win conditions
+        % player 2 win conditions
 % win conditions containing t(1,1)
         if t(1,1)=='O' 
             if t(1,2)=='O' & t(1,3)=='O' % checks row 1
