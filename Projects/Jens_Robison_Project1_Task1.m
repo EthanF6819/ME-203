@@ -8,7 +8,7 @@ clc;clear all; format compact;
 
 
 t=[" " " " " "; " " " " " "; " " " " " "];
-player=1;
+player=round(rand(1))+1;
 win=0; % win = 1 when a player wins
 turns=0;
 
