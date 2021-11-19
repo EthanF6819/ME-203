@@ -1,0 +1,48 @@
+% Ethan Ferguson, Jens Robison and Teddy Roy
+% Playing with Real Data
+clc; format compact;
+% Relating Voltage to Velocity
+cal_volts=[1.1334761517302536, 1.2168838402316453, 1.2574484652661773, 1.28406653483074,...
+    1.2945098977285117, 1.306963086494241, 1.3147604417015477, 1.3228523686035325, 1.3311519051962617,...
+    1.3343771944501273]; %(volts)
+cal_speed=[0,.31,.53,.68,.73,.84,.90,.96,1.02,1.10];%(m/s)
+% Finding first order best fit line
+p1=polyfit(cal_volts,cal_speed,1);
+V=polyval(p1,Voltage);
+% Finding Time
+first_t=t(1,:);
+last_t=t(119943,:);
+T=last_t-first_t;
+Time=linspace(0,T,119943);
+% Graph of oltage over time
+figure(1)
+plot(Time,V);
+title('Voltage over Time')
+xlabel('Time')
+ylabel('Voltage')
+
+Fs=1/(Time(2)-Time(1));
+Tf=1/Fs;
+L=T*1000;
+tf = (0:L-1)*Tf;
+
+x = 0.7*sin(2*pi*50*tf) + sin(2*pi*120*tf); 
+y = x + 2*randn(size(tf));     % Sinusoids plus noise
+figure(2)
+plot(Fs*tf(1:50),y(1:50))
+title('Signal Line')
+xlabel('time (milliseconds)')
+
+NFFT = 2^nextpow2(L); % Next power of 2 from length of y
+Y = fft(y,NFFT)/L;
+f = Fs/2*linspace(0,1,NFFT/2+1);
+
+% Plot single-sided amplitude spectrum.
+figure(3)
+plot(f,2*abs(Y(1:NFFT/2+1))) 
+title('Single-Sided Amplitude Spectrum of power')
+xlabel('Frequency (Hz)')
+ylabel('Power')
+
+figure(4)
+loglog(f,2*abs(Y(1:NFFT/2+1)))
